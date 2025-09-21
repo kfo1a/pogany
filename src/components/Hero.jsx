@@ -42,76 +42,62 @@ const Hero = () => {
             delay:0.5,
         });
 
-        gsap.timeline({
-            scrollTrigger: {
-                trigger: '#hero',
-                start: 'top top',
-                end: 'bottom top',
-                scrub: true,
-            }
-        })
-        .to('.right-leaf', {y:200}, 0)
-        .to('.left-leaf', {y:-200}, 0)
 
-        const  startValue = isMobile? 'top 50%' : 'center 60%'
-        const endValue = isMobile?'120% top' : 'bottom top'
+        const  startValue = isMobile? 'top 50%' : 'center 99%'
+        const endValue = isMobile?'120% top' : 'bottom 99%'
 
         const tl = gsap.timeline({
             scrollTrigger: {
-                trigger: 'video',
+                trigger: 'v',
                 start: startValue,
                 end: endValue,
                 scrub: true,
                 pin:true,
             }
         })
-        videoRef.current.onloadedmetadata = () => {
-            tl.to(videoRef.current, {
-                currentTime: videoRef.current.duration
-            })
-        }
+videoRef.current.onloadedmetadata = () => {
+  videoRef.current.currentTime = 0; // ✅ force start
+  tl.fromTo(
+    videoRef.current,
+    { currentTime: 0 },
+    { currentTime: videoRef.current.duration }
+  );
+};
+
         
     }, []);
   return (
     <>
     <section id="hero" className="noisy">
-        <h1 className="title">MOJITO</h1>
-        <img
-        src="/images/hero-left-leaf.png"
-        alt="left-leaf"
-        className='left-leaf'
-        />
-        <img
-        src="/images/hero-right-leaf.png"
-        alt="right-leaf"
-        className='right-leaf'
-        />
+        <h1 className="title">POGANY</h1>
 		<div className="body"> 
             <div className="content">
                 <div className="space-y-5 hidden md:block">
-                    <p className='sigma'>Cool. Crisp. Classic.</p>
+                    <p className='sigma'></p>
                     <p className="subtitle">
-                        Sip the Spirit <br /> of Summer
+                        The modern face of timeless beauty
                     </p>
                 </div>
                 <div className="view-cocktails">
                     <p className="subtitle">
-                        Every cocktail on our menu is a blend of premium ingredients, creative flair, and timeless recipes — designed to delight your senses and elevate your experience.
+                        A masterpiece of modern sculpture that redefines simplicity and grace, capturing the delicate balance between timeless tradition and bold innovation
                     </p>
-                    <a href="#cocktails" className='sigma'>View Cocktails</a>
+                    <a href="#cocktails" className='sigma'>Learn more</a>
                 </div>
             </div>
         </div>
     </section>
-    <div className="video absolute inset-0">
-        <video
-            ref={videoRef}
-            src="/videos/output.mp4"
-            muted
-            playsInline
-            preload='auto'
-        />
-    </div>
+<div className="fixed inset-0 -z-0 w-full h-full">
+  <video 
+    ref={videoRef}
+    src="/videos/video (14).mp4"
+    muted
+    playsInline
+    preload="auto"
+    className="w-full h-full object-cover image-crisp"
+  />
+</div>
+
   </>
   )
   
